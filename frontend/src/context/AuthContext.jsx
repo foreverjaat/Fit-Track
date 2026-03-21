@@ -1,6 +1,4 @@
 
-
-
 import { createContext, useContext, useState } from "react";
 import API from "../api/axios";
 
@@ -12,15 +10,17 @@ export const AuthProvider = ({ children }) => {
     return stored ? JSON.parse(stored) : null;
   });
 
+  //  FIXED LOGIN
   const login = async (email, password) => {
-    const { data } = await API.post("/auth/login", { email, password });
+    const { data } = await API.post("/api/auth/login", { email, password });
     setUser(data);
     localStorage.setItem("fittrackUser", JSON.stringify(data));
     return data;
   };
 
+  //  FIXED REGISTER
   const register = async (formData) => {
-    const { data } = await API.post("/auth/register", formData);
+    const { data } = await API.post("/api/auth/register", formData);
     setUser(data);
     localStorage.setItem("fittrackUser", JSON.stringify(data));
     return data;
