@@ -28,7 +28,7 @@ export default function Progress() {
   const [saving, setSaving]       = useState(false);
 
   useEffect(() => {
-    API.get("/progress")
+    API.get("/api/progress")
       .then((res) => setLogs(res.data))
       .catch(() => toast.error("Failed to load progress"))
       .finally(() => setLoading(false));
@@ -47,7 +47,7 @@ export default function Progress() {
     if (!form.weight) { toast.error("Weight is required"); return; }
     setSaving(true);
     try {
-      const { data } = await API.post("/progress", form);
+      const { data } = await API.post("/api/progress", form);
       setLogs((p) => [...p, data]);
       setShowModal(false);
       setForm(initForm);
@@ -61,7 +61,7 @@ export default function Progress() {
 
   const handleDelete = async (id) => {
     try {
-      await API.delete(`/progress/${id}`);
+      await API.delete(`/api/progress/${id}`);
       setLogs((p) => p.filter((l) => l._id !== id));
       toast.success("Log deleted");
     } catch {
