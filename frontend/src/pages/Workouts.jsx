@@ -26,7 +26,7 @@ export default function Workouts() {
     setLoading(true);
     try {
       const params = cat ? `?category=${cat}` : "";
-      const { data } = await API.get(`/workouts${params}`);
+      const { data } = await API.get(`/api/workouts${params}`);
       setWorkouts(data.workouts);
     } catch {
       toast.error("Failed to load workouts");
@@ -56,7 +56,7 @@ export default function Workouts() {
     if (!form.title.trim()) { toast.error("Workout title is required"); return; }
     setSaving(true);
     try {
-      const { data } = await API.post("/workouts", form);
+      const { data } = await API.post("/api/workouts", form);
       setWorkouts((p) => [data, ...p]);
       setShowModal(false);
       setForm(initForm);
@@ -70,7 +70,7 @@ export default function Workouts() {
 
   const handleDelete = async (id) => {
     try {
-      await API.delete(`/workouts/${id}`);
+      await API.delete(`/api/workouts/${id}`);
       setWorkouts((p) => p.filter((w) => w._id !== id));
       toast.success("Workout deleted");
     } catch {
