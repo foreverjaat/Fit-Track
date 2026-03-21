@@ -52,7 +52,7 @@ export default function Profile() {
     if (!form.name.trim()) { toast.error("Name is required"); return; }
     setSaving(true);
     try {
-      const { data } = await API.put("/auth/update", form);
+      const { data } = await API.put("/api/auth/update", form);
       updateUser(data);
       toast.success("Profile updated! ✅");
     } catch (err) {
@@ -68,7 +68,7 @@ export default function Profile() {
     if (pwForm.newPassword !== pwForm.confirm) { toast.error("Passwords do not match"); return; }
     setSavingPw(true);
     try {
-      await API.put("/auth/change-password", {
+      await API.put("/api/auth/change-password", {
         currentPassword: pwForm.currentPassword,
         newPassword:     pwForm.newPassword,
       });
