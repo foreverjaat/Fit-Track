@@ -50,7 +50,9 @@ export default function Dashboard() {
     name: c._id, value: c.count,
   })) || [];
 
-  const hours = Math.floor((stats?.totalDuration || 0) / 60);
+  const totalMinutes = stats?.totalDuration || 0;
+   const hours = Math.floor(totalMinutes / 60);
+   const minutes = totalMinutes % 60;
 
   return (
     <div className="fade-up">
@@ -64,10 +66,10 @@ export default function Dashboard() {
       <div className="page-body">
         {/* Stat Cards */}
         <div className="stats-grid">
-          <StatCard label="Total Workouts"  value={stats?.totalWorkouts || 0}                    sub="All time sessions"  icon="🏋️" color="#8cf4e4" />
-          <StatCard label="This Week"       value={stats?.weekWorkouts || 0}                     sub="Sessions logged"    icon="📅" color="#c268ee" />
+          <StatCard label="Total Workouts"  value={stats?.totalWorkouts || 0}     sub="All time sessions"  icon="🏋️" color="#8cf4e4" />
+          <StatCard label="This Week"       value={stats?.weekWorkouts || 0}          sub="Sessions logged"    icon="📅" color="#c268ee" />
           <StatCard label="Calories Burned" value={`${(stats?.totalCalories || 0).toLocaleString()}`} sub="Total kcal burned"  icon="🔥" color="#ff4d6d" />
-          <StatCard label="Total Duration"  value={`${hours}h`}                                  sub="Hours of training"  icon="⏱" color="#ff9900" />
+          <StatCard label="Total Duration"  value={`${hours ? `${hours}h ` : ""}${minutes}m`}    sub="Hours of training"  icon="⏱" color="#ff9900" />
         </div>
 
         {/* Charts */}
