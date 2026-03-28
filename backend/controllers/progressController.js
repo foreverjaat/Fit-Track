@@ -1,8 +1,7 @@
 
 import Progress from "../models/Progress.js";
 
-// @desc   Get all progress logs
-// @route  GET /api/progress
+
 const getProgress = async (req, res) => {
   try {
     const logs = await Progress.find({ user: req.user._id }).sort({ date: 1 });
@@ -12,8 +11,7 @@ const getProgress = async (req, res) => {
   }
 };
 
-// @desc   Add a progress log
-// @route  POST /api/progress
+
 const addProgress = async (req, res) => {
   try {
     const { weight, bodyFat, chest, waist, hips, arms, date } = req.body;
@@ -27,8 +25,7 @@ const addProgress = async (req, res) => {
   }
 };
 
-// @desc   Delete a progress log
-// @route  DELETE /api/progress/:id
+
 const deleteProgress = async (req, res) => {
   try {
     const log = await Progress.findOneAndDelete({
