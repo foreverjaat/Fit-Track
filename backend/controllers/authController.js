@@ -6,8 +6,7 @@ import jwt from "jsonwebtoken";
 const generateToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 
-// @desc   Register new user
-// @route  POST /api/auth/register
+
 const register = async (req, res) => {
   const { name, email, password, age, weight, height, gender, goal } = req.body;
   try {
@@ -39,8 +38,7 @@ const register = async (req, res) => {
   }
 };
 
-// @desc   Login user
-// @route  POST /api/auth/login
+
 const login = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -70,14 +68,12 @@ const login = async (req, res) => {
   }
 };
 
-// @desc   Get current logged in user
-// @route  GET /api/auth/me
+
 const getMe = async (req, res) => {
   res.json(req.user);
 };
 
-// @desc   Update user profile
-// @route  PUT /api/auth/update
+
 const updateProfile = async (req, res) => {
   try {
     const { name, age, weight, height, gender, goal } = req.body;
@@ -92,8 +88,7 @@ const updateProfile = async (req, res) => {
   }
 };
 
-// @desc   Change password
-// @route  PUT /api/auth/change-password
+
 const changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
