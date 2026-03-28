@@ -3,8 +3,7 @@ import mongoose from "mongoose";
 import Workout  from "../models/Workout.js";
 import Progress from "../models/Progress.js";
 
-// @desc   Get dashboard stats for logged-in user
-// @route  GET /api/dashboard/stats
+
 const getStats = async (req, res) => {
   try {
     const userId    = req.user._id;
