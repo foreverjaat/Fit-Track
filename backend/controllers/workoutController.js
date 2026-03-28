@@ -1,8 +1,7 @@
 
 import Workout from "../models/Workout.js";
 
-// @desc   Get all workouts for logged-in user
-// @route  GET /api/workouts
+
 const getWorkouts = async (req, res) => {
   try {
     const { category, page = 1, limit = 20, startDate, endDate } = req.query;
@@ -27,8 +26,7 @@ const getWorkouts = async (req, res) => {
   }
 };
 
-// @desc   Get single workout by id
-// @route  GET /api/workouts/:id
+
 const getWorkout = async (req, res) => {
   try {
     const workout = await Workout.findOne({ _id: req.params.id, user: req.user._id });
@@ -39,8 +37,7 @@ const getWorkout = async (req, res) => {
   }
 };
 
-// @desc   Create new workout
-// @route  POST /api/workouts
+
 const createWorkout = async (req, res) => {
   try {
     const { title, category, exercises, caloriesBurned, duration, notes, date } = req.body;
@@ -62,8 +59,7 @@ const createWorkout = async (req, res) => {
   }
 };
 
-// @desc   Update workout
-// @route  PUT /api/workouts/:id
+
 const updateWorkout = async (req, res) => {
   try {
     const workout = await Workout.findOneAndUpdate(
@@ -78,8 +74,7 @@ const updateWorkout = async (req, res) => {
   }
 };
 
-// @desc   Delete workout
-// @route  DELETE /api/workouts/:id
+
 const deleteWorkout = async (req, res) => {
   try {
     const workout = await Workout.findOneAndDelete({
