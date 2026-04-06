@@ -134,7 +134,8 @@ select option {
   display: flex;
   flex-direction: column;
   padding: 1.5rem 1rem;
-  z-index: 100;
+  z-index: 200;
+  transition: transform 0.3s ease;
 }
 
 .sidebar-brand {
@@ -241,6 +242,75 @@ select option {
 
 .btn-logout:hover {
   background: rgba(255, 77, 109, 0.18);
+}
+
+/* ─── MOBILE TOPBAR ──────────────────────────────────────────────────────── */
+.mobile-topbar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 150;
+}
+
+.mobile-topbar-brand {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+
+.hamburger-btn {
+  background: none;
+  border: none;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.hamburger-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.hamburger-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* X animation when open */
+.hamburger-btn.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger-btn.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger-btn.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ─── SIDEBAR OVERLAY ────────────────────────────────────────────────────── */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 180;
+  backdrop-filter: blur(2px);
 }
 
 /* ─── STAT CARDS ─────────────────────────────────────────────────────────── */
@@ -450,36 +520,40 @@ select option {
   gap: 12px;
   font-size: 0.8rem;
   color: var(--muted);
-  margin: 10px 0;
+  margin-bottom: 10px;
   flex-wrap: wrap;
 }
 
 .wc-exercises {
   border-top: 1px solid var(--border);
   padding-top: 10px;
+  margin-top: 6px;
 }
 
 .wc-ex {
   font-size: 0.8rem;
-  color: #aaa;
+  color: var(--muted);
   padding: 3px 0;
 }
 
 .wc-notes {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--muted);
-  margin-top: 8px;
   font-style: italic;
+  margin-top: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
 }
 
+/* ─── EMPTY STATE ────────────────────────────────────────────────────────── */
 .empty-state {
-  grid-column: 1 / -1;
   text-align: center;
   padding: 4rem 2rem;
   color: var(--muted);
+  grid-column: 1 / -1;
 }
 
-.empty-state .empty-icon {
+.empty-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
@@ -494,12 +568,11 @@ select option {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(4px);
-  z-index: 999;
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 300;
   padding: 1rem;
 }
 
@@ -509,21 +582,9 @@ select option {
   border-radius: 20px;
   padding: 2rem;
   width: 100%;
-  max-width: 520px;
-  max-height: 88vh;
+  max-width: 560px;
+  max-height: 90vh;
   overflow-y: auto;
-  position: relative;
-}
-
-.modal::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 20%;
-  right: 20%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  border-radius: 2px;
 }
 
 .modal-header {
@@ -543,9 +604,9 @@ select option {
   background: none;
   border: none;
   color: var(--muted);
-  font-size: 1.3rem;
-  padding: 4px;
-  border-radius: 6px;
+  font-size: 1.2rem;
+  padding: 4px 8px;
+  border-radius: 8px;
   transition: color 0.2s;
 }
 
@@ -595,69 +656,23 @@ select option {
   margin-bottom: 10px;
 }
 
-/* ─── FORM GROUPS ────────────────────────────────────────────────────────── */
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-label {
-  display: block;
-  font-size: 0.75rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 6px;
-}
-
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-}
-
-.grid-3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.75rem;
-}
-
-.exercise-box {
-  background: var(--surface);
-  border-radius: 10px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-
-.exercise-box-title {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-}
-
 /* ✅ FIXED GRID */
 .exercise-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1.5fr;
-  /* 🔥 FIX: more space for weight */
   gap: 8px;
   margin-bottom: 8px;
 }
 
-/* keep input same */
 .exercise-grid input {
   font-size: 0.82rem;
   padding: 7px 10px;
 }
 
-/* ✅ FIXED SELECT */
 .exercise-grid select {
   font-size: 0.82rem;
   padding: 7px 10px;
   min-width: 100px;
-  /* 🔥 ensures "Heavy" fully visible */
 }
 
 .ex-item {
@@ -829,6 +844,7 @@ select option {
   background: radial-gradient(ellipse at 20% 50%, #182600 0%, transparent 50%),
     radial-gradient(ellipse at 80% 20%, #001829 0%, transparent 50%),
     var(--bg);
+  padding: 1rem;
 }
 
 .auth-card {
@@ -836,7 +852,8 @@ select option {
   border: 1px solid var(--border);
   border-radius: 20px;
   padding: 2.5rem;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   position: relative;
   overflow: hidden;
 }
@@ -956,7 +973,6 @@ select option {
     opacity: 0;
     transform: translateY(12px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -990,8 +1006,6 @@ select option {
   padding: 4rem;
 }
 
-
-
 /* ─── PASSWORD TOGGLE ────────────────────────────────────────────────────── */
 .password-wrapper {
   position: relative;
@@ -1001,7 +1015,6 @@ select option {
 
 .password-wrapper input {
   padding-right: 42px;
-  /* make space for the eye icon */
 }
 
 .eye-btn {
@@ -1019,4 +1032,251 @@ select option {
 
 .eye-btn:hover {
   color: var(--accent);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE — max-width: 768px
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── Root layout: no horizontal scroll ── */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .app-layout {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ── Sidebar slides off-screen by default ── */
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 200;
+    width: 240px;
+  }
+
+  /* ── Sidebar visible when .open ── */
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+  }
+
+  /* ── Overlay visible when sidebar open ── */
+  .sidebar-overlay.open {
+    display: block;
+  }
+
+  /* ── Show mobile topbar ── */
+  .mobile-topbar {
+    display: flex;
+  }
+
+  /* ── Main content: no left margin, add top padding for topbar ── */
+  .main-content {
+    margin-left: 0;
+    padding-top: 56px;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ── Page header: smaller padding, stack vertically ── */
+  .page-header {
+    padding: 1.25rem 1rem 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .page-header .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .page-title h1 {
+    font-size: 1.8rem;
+  }
+
+  /* ── Page body padding ── */
+  .page-body {
+    padding: 0 1rem 2rem;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ── Stats: 2 columns on mobile ── */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  /* ── Charts: single column, contained ── */
+  .charts-grid {
+    grid-template-columns: 1fr;
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* ── Progress grid: single column, contained ── */
+  .progress-grid {
+    grid-template-columns: 1fr;
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* ── All chart-cards: prevent overflow ── */
+  .chart-card {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  /* ── Profile: single column ── */
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Form grids: single column ── */
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  /* ── Exercise input grid: 2 columns ── */
+  .exercise-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  /* ── Workout cards: single column, constrained ── */
+  .workouts-grid {
+    grid-template-columns: 1fr;
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* ── Prevent page wrapper from causing overflow ── */
+  .fade-up {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ── Workout card: prevent overflow ── */
+  .workout-card {
+    width: 100%;
+    min-width: 0;
+    word-break: break-word;
+  }
+
+  /* ── Empty state: constrain width ── */
+  .empty-state {
+    width: 100%;
+    padding: 3rem 1rem;
+  }
+
+  /* ── Wc-meta: wrap properly ── */
+  .wc-meta {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ── Stat card values slightly smaller ── */
+  .stat-value {
+    font-size: 1.9rem;
+  }
+
+  /* ── Chart card padding ── */
+  .chart-card {
+    padding: 1rem;
+  }
+
+  /* ── Modal full-width on mobile ── */
+  .modal {
+    padding: 1.25rem;
+    border-radius: 16px;
+    max-height: 85vh;
+  }
+
+  .modal-title {
+    font-size: 1.3rem;
+  }
+
+  /* ── Filter bar scrollable ── */
+  .filter-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-btn {
+    flex-shrink: 0;
+  }
+
+  /* ── Recent item: wrap on tiny screens ── */
+  .recent-item {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  /* ── Progress table: horizontal scroll ── */
+  .chart-card > div[style*="overflow"] {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ── Metric tabs scrollable ── */
+  .metric-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 6px;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .metric-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .metric-tab {
+    flex-shrink: 0;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 400px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .stat-value {
+    font-size: 1.6rem;
+  }
+
+  .stat-label {
+    font-size: 0.68rem;
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .exercise-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
