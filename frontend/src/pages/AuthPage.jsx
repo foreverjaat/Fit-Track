@@ -18,7 +18,7 @@ export default function AuthPage() {
   const { login, register } = useAuth();
   const navigate = useNavigate();
 
-  // Login form state
+ 
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
 
   // Register form state
@@ -37,7 +37,7 @@ export default function AuthPage() {
     try {
       await login(loginForm.email, loginForm.password);
       toast.success("Welcome back! 💪");
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed");
     } finally {
@@ -58,7 +58,7 @@ export default function AuthPage() {
     try {
       await register(regForm);
       toast.success("Account created! Let's go 🚀");
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       toast.error(err.response?.data?.message || "Registration failed");
     } finally {
@@ -71,7 +71,7 @@ export default function AuthPage() {
       <div className="auth-card">
         <div className="auth-logo">
           <div className="logo-emoji">💪</div>
-          <h1>FitTrack Pro</h1>
+          <h1>Fit-Track</h1>
           <p>Your all-in-one fitness companion</p>
         </div>
 
