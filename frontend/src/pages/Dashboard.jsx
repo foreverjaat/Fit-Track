@@ -9,16 +9,17 @@ import { useAuth } from "../context/AuthContext";
 import StatCard from "../components/StatCard";
 
 const CAT_COLORS = [
-  "#c8ff00","#ff4d6d","#00d4ff","#ff9900","#a855f7","#06b6d4","#f43f5e","#10b981",
+  "#a7b380","#ff4d6d","#00d4ff","#ff9900","#a855f7","#06b6d4","#f43f5e","#27b082",
 ];
 
 export default function Dashboard() {
   const { user } = useAuth();
   const [stats, setStats]     = useState(null);
   const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
-    API.get("/api/dashboard/stats")
+    API.get("api/dashboard/stats")
       .then((res) => setStats(res.data))
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -49,16 +50,19 @@ export default function Dashboard() {
   const pieData = stats?.categoryBreakdown?.map((c) => ({
     name: c._id, value: c.count,
   })) || [];
+  
+  
+  
+   const totalMinutes = stats?.totalDuration || 0;
 
-  const totalMinutes = stats?.totalDuration || 0;
    const hours = Math.floor(totalMinutes / 60);
    const minutes = totalMinutes % 60;
    let durationLabel = "Training time";
-   if (totalMinutes >= 60) {
-     durationLabel = "Hours of training";
-     } else {
-     durationLabel = "Minutes of training";
-     }
+if (totalMinutes >= 60) {
+  durationLabel = "Hours of training";
+} else {
+  durationLabel = "Minutes of training";
+}
 
   return (
     <div className="fade-up">
@@ -67,15 +71,17 @@ export default function Dashboard() {
           <h1>DASHBOARD</h1>
           <p>Welcome back, {user?.name?.split(" ")[0]} 👋</p>
         </div>
+
+        
       </div>
 
       <div className="page-body">
         {/* Stat Cards */}
         <div className="stats-grid">
           <StatCard label="Total Workouts"  value={stats?.totalWorkouts || 0}     sub="All time sessions"  icon="🏋️" color="#8cf4e4" />
-          <StatCard label="This Week"       value={stats?.weekWorkouts || 0}          sub="Sessions logged"    icon="📅" color="#c268ee" />
+          <StatCard label="This Week"       value={stats?.weekWorkouts || 0}        sub="Sessions logged"    icon="📅" color="#c268ee" />
           <StatCard label="Calories Burned" value={`${(stats?.totalCalories || 0).toLocaleString()}`} sub="Total kcal burned"  icon="🔥" color="#ff4d6d" />
-          <StatCard label="Total Duration"  value={`${hours ? `${hours}h ` : ""}${minutes}m`}    sub={durationLabel}  icon="⏱" color="#ff9900" />
+          <StatCard label="Total Duration"  value={`${hours ? `${hours}h ` : ""}${minutes}min`}      sub={durationLabel}  icon="⏱" color="#ff9900" />
         </div>
 
         {/* Charts */}
@@ -85,11 +91,11 @@ export default function Dashboard() {
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={barData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-                <XAxis dataKey="day" tick={{ fill: "#666", fontSize: 12 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: "#666", fontSize: 11 }} axisLine={false} tickLine={false} />
+                <XAxis dataKey="day" tick={{ fill: "#6d6b6b", fontSize: 12 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: "#898585", fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip
                   contentStyle={{ background: "#18181f", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8 }}
-                  labelStyle={{ color: "#f0f0f0" }}
+                  labelStyle={{ color: "#888080" }}
                   itemStyle={{ color: "#e1efad" }}
                 />
                 <Bar dataKey="calories" fill="#e0f39f" radius={[6, 6, 0, 0]} />
@@ -150,3 +156,6 @@ export default function Dashboard() {
     </div>
   );
 }
+
+
+
